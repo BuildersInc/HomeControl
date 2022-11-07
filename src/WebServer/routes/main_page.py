@@ -1,7 +1,5 @@
-
-
 class MainPage:
-    def __init__(self, route: str, name: str, methods: list,) -> None:
+    def __init__(self, route: str, name: str, methods: list) -> None:
         self.route = route
         self.name = name
         self.methods = methods
