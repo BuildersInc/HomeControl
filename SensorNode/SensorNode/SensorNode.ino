@@ -4,25 +4,27 @@
 #include <Sodaq_SHT2x.h>
 
 
+// Configuration
+
+const int id = 0b00110001;  //ID: 49 (unique in Network)
+
+
 
 // Wifi
 const char* ssid     = "Wlan";
 const char* password = "hrmp1143";
-const char* hostIP = "192.168.63.197";
+const char* hostIP = "192.168.160.197";  //Change to static IP
 const int udpPort = 1337;
 
 // UDP
 WiFiUDP UDP;
 char packet[255];
-char reply[255];
 
 
 // Pins
 const int heartbeatLED = 14;  // D5
 const int failureLED = 12;  // D6
 
-const int trigPin = 2;  // D4
-const int echoPin = 4;  // D3
 
 // Helper
 const int heartbeatPulse = 500;
@@ -41,6 +43,7 @@ void heartbeat() {
 
 void logError(int code) {
   Serial.println(code);
+  digitalWrite(heartbeatLED, LOW);
   switch (code) {
     case 1 :
       Serial.println("No Wifi connection");
@@ -58,8 +61,8 @@ void logError(int code) {
 }
 
 void buildResult() {
-  snprintf(reply, sizeof(reply), "%0.5f;%0.5f", SHT2x.GetHumidity(), SHT2x.GetTemperature());
-  reply[sizeof(reply) - 1] = '\0';
+  snprintf(packet, sizeof(packet), "%0.5f;%0.5f;%i", SHT2x.GetHumidity(), SHT2x.GetTemperature(), id);
+  packet[sizeof(packet) - 1] = '\0';
 }
 
 void setup() {
@@ -90,12 +93,12 @@ void loop() {
 
   buildResult();
 
-  Serial.println(reply);
+  Serial.println(packet);
 
   if (wifiConnect) {
     if (WiFi.status() != WL_CONNECTED) logError(1);
     UDP.beginPacket(hostIP, udpPort);
-    UDP.write(reply);
+    UDP.write(packet);
     UDP.endPacket();
   }
 
