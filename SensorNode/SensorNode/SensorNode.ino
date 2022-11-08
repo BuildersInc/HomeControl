@@ -47,13 +47,13 @@ void logError(int code) {
       for (int i = 1; i < 3; i++) {
         digitalWrite(failureLED, LOW);
         delay(125);
-      
+
         digitalWrite(failureLED, HIGH);
-        delay(125);  
+        delay(125);
       }
       break;
     }
-  
+
   logError(code);
 }
 
@@ -68,7 +68,7 @@ void setup() {
   pinMode(failureLED, OUTPUT);
 
   Wire.begin();
-  
+
   Serial.begin(9600);
   if (wifiConnect) {
     WiFi.begin(ssid, password);
@@ -81,8 +81,8 @@ void setup() {
 
 
     if (WiFi.status() != WL_CONNECTED && i >= 10) logError(1);
-    Serial.println(WiFi.localIP()); 
-  } 
+    Serial.println(WiFi.localIP());
+  }
 
 }
 
@@ -98,7 +98,7 @@ void loop() {
     UDP.write(reply);
     UDP.endPacket();
   }
-  
+
   heartbeat();
 
 }
