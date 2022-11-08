@@ -6,6 +6,7 @@ from flask_restful import Api
 
 from .exceptions import ResourceIsBusyException
 from .routes import main_page
+from .resources import NodeListener
 
 
 class WebServer:

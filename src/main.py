@@ -11,7 +11,9 @@ def parser():
         argument_parser
     """
     new_parser = argparse.ArgumentParser(
-        description=""
+        description="A fully open Smart home system",
+        epilog="All commands have default values, only change if you know what to do"
+
     )
 
     new_parser.add_argument("-p", "--port",
@@ -30,6 +32,9 @@ def parser():
 
 def main(args):
     web_app = WebServer.WebServer(port=args.port, debug=args.debug_mode)
+
+    WebServer.NodeListener.UDPSocket().start_process()
+
     web_app.run()
 
 

@@ -13,7 +13,7 @@ const int id = 0b00110001;  //ID: 49 (unique in Network)
 // Wifi
 const char* ssid     = "Wlan";
 const char* password = "hrmp1143";
-const char* hostIP = "192.168.160.197";  //Change to static IP
+const char* hostIP = "192.168.99.197";  //Change to static IP
 const int udpPort = 1337;
 
 // UDP
